@@ -1,9 +1,17 @@
 User.destroy_all
 Meal.destroy_all
-Food.destroy_all
 MealFood.destroy_all
+Food.destroy_all
 
-chicken = Food.create(food_name: "Chicken", calories: 200)
-bob_sam = User.create(user_name: "Bob Sam")
-meal1 = Meal.create(name: "dinner", user: bob_sam)
-meal_food1 = MealFood.create(food: chicken, meal: meal1)
+Food.create(:food_name => "🍗 CHICKEN ", :calories => 400)
+Food.create(:food_name => "🥔 POTATO ", :calories => 500)
+Food.create(:food_name => "🍞 BREAD ", :calories => 500)
+Food.create(:food_name => "🥛 MILK", :calories => 600)
+soup = Food.create(:food_name => "🍵 SOUP", :calories => 700)
+
+
+# chickan = Meal.create(:name => "chicken ala chicken", :user_id => bob.id)
+MealFood.create(:food_id => soup.id, :meal_id => soup.id)
+puts "SEEDED"
+
+ 
