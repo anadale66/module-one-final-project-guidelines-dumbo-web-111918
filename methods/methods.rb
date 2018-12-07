@@ -1,4 +1,5 @@
 def welcome
+  system "clear"
   puts "🥦 🍎 💫 WELCOME TO MEALMAKER 💫 🍎 🥦"
   sleep 1
   prompt = TTY::Prompt.new
@@ -23,18 +24,30 @@ def delegate_main_menu(choice, userObj)
     if wantToEdit == "Yes" && userObj.meals.size > 0
       meal_id = select_meals_to_edit(userObj)
       edit_meal(meal_id)
+      loop_menu(userObj)
     elsif wantToEdit == "Yes" && userObj.meals.size == 0
       puts "You haven't eaten any meals!"
+      loop_menu(userObj)
     elsif wantToEdit == "No"
       puts "Well, that sucks"
+      loop_menu(userObj)
     end
       
   elsif choice == "Add Meal"
     add_meal(userObj)
+    loop_menu(userObj)
+  elsif choice == "Exit Program"
+    puts "HAVE A GREAT DAY!!"
   end
 end
 
 
+  def loop_menu(userObj)
+    system "clear"
+    userObj.reload
+    choice = main_menu()
+    delegate_main_menu(choice, userObj)
+  end
 
 
 

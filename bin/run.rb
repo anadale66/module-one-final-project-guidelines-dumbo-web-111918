@@ -11,15 +11,14 @@ userObj = User.find_by(user_name: user_name)
 if userObj
     # check to see if user exists
     puts "Welcome back #{userObj.user_name}"
-    choice = main_menu()
-    delegate_main_menu(choice, userObj)
+    loop_menu(userObj)
 
 else 
 
     userObj = User.create(:user_name => user_name)
     puts "Hey #{userObj.user_name}"
-    choice = main_menu()
-    delegate_main_menu(choice, userObj)
+    loop_menu(userObj)
+
 
     # add_meal(new_user)
     # puts "Thank you for storing your meal with MEALMAKER"
