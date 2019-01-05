@@ -1,14 +1,16 @@
+
+
 def welcome
   system "clear"
-  puts "🥦 🍎 💫 WELCOME TO MEALMAKER 💫 🍎 🥦"
-  sleep 1
+  puts "🥦 🍎 💫 WELCOME TO MEAL MAKER 💫 🍎 🥦"
+  say_welcome
+  say_what
   prompt = TTY::Prompt.new
   name =  prompt.ask('What is your name?') 
+  say_name(name)
   return name
   # User.create(:user_name => name)
 end
-
-
 
 
 def main_menu
@@ -19,6 +21,8 @@ end
 
 def delegate_main_menu(choice, userObj)
   if choice == "See/Edit Meals"
+    here_they_are
+    edit_meals
     show_meals(userObj)
     wantToEdit = userObj.ask_to_edit
     if wantToEdit == "Yes" && userObj.meals.size > 0
@@ -26,10 +30,22 @@ def delegate_main_menu(choice, userObj)
       edit_meal(meal_id)
       loop_menu(userObj)
     elsif wantToEdit == "Yes" && userObj.meals.size == 0
-      puts "You haven't eaten any meals!"
+      print "."
+      sleep 0.5
+      print "."
+      sleep 0.5
+      puts "🥦 🍎 You have not eaten any meals!"
+      no_meal
+      puts " "
       loop_menu(userObj)
     elsif wantToEdit == "No"
-      puts "Well, that sucks"
+      print "."
+      sleep 0.5
+      print "."
+      sleep 0.5
+      puts "🥦 🍎 Ok, fine."
+      sucks
+      puts " "
       loop_menu(userObj)
     end
       
@@ -37,20 +53,18 @@ def delegate_main_menu(choice, userObj)
     add_meal(userObj)
     loop_menu(userObj)
   elsif choice == "Exit Program"
-    puts "HAVE A GREAT DAY!!"
+    goodbye
+    puts "🌈 HAVE A NICE DAY!!"
   end
 end
 
-
   def loop_menu(userObj)
-    system "clear"
+    like_to_do 
     userObj.reload
     choice = main_menu()
+    system "clear"
     delegate_main_menu(choice, userObj)
   end
-
-
-
 
 def add_meal(userObj)
   meal_name = ask_meal_name
@@ -59,7 +73,24 @@ def add_meal(userObj)
   food_array = food_choices
   #food_array = [1,2,3] of food ids
   userObj.add_meal(meal, food_array)
-  puts "You consumed #{meal.add_calories} calories!"
+  sleep 0.5
+  puts " "
+  puts "🥦 🍎 YOU CONSUMED..."
+  consumed
+  puts "#{meal.add_calories} CALORIES!!"
+  num_calories(meal.add_calories)
+  sleep 0.5
+  puts "Your MEAL is disgusting. Gross"
+  gross
+  sleep 0.5
+  puts "🤮"
+  vomit
+  sleep 0.5
+  puts " "
+  puts "Your MEAL has been STORED!!"
+  stored
+  puts " "
+  sleep 0.5
 end
   
 
@@ -67,7 +98,9 @@ end
 #HELPER METHODS FOR ADDING/EDITING A MEAL ----------
 def ask_meal_name 
   prompt = TTY::Prompt.new
-  meal_name = prompt.ask("WHAT IS THE NAME OF YOUR MEAL?")
+  what_is_the_name
+  meal_name = prompt.ask("What is the name of your meal?")
+  your_meal(meal_name)
   return meal_name
 end
 
@@ -75,6 +108,7 @@ def food_choices
   prompt = TTY::Prompt.new
   food_names = Food.all.map{|food| {food.food_name => food.id}}
   selected_options = prompt.multi_select("Select Your Foods?", food_names)
+  ok
   return selected_options
 end
 
